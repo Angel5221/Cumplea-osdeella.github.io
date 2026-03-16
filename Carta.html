@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Carta especial</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-family:sans-serif;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+overflow:hidden;
+}
+
+/* REGALO */
+
+.regalo{
+width:150px;
+height:150px;
+background:#ff4757;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:60px;
+cursor:pointer;
+box-shadow:0 15px 35px rgba(0,0,0,.3);
+}
+
+/* CARTA */
+
+.carta{
+display:none;
+width:340px;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+text-align:center;
+}
+
+h1{
+color:#ff4d6d;
+}
+
+/* BOTONES */
+
+.botones{
+margin-top:20px;
+}
+
+button{
+border:none;
+padding:12px 20px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+margin:5px;
+transition:0.3s;
+}
+
+.si{
+background:#2ed573;
+color:white;
+}
+
+.no{
+background:#ff4757;
+color:white;
+position:fixed;
+}
+
+/* MUSICA */
+
+.reproductor{
+margin-top:20px;
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+width:260px;
+text-align:center;
+}
+
+input[type=range]{
+width:100%;
+}
+
+/* CORAZONES */
+
+.corazon{
+position:fixed;
+font-size:20px;
+animation:subir 6s linear;
+}
+
+@keyframes subir{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-100vh);opacity:0}
+}
+
+/* HELLO KITTY */
+.kitty{
+position:fixed;
+bottom:20px;
+right:20px;
+display:none;
+}
+
+.kitty img{
+width:120px;
+}
+
+</style>
+</head>
+
+<body>
+<h1>¡Paquete Autorizado!</h1>
+<div class="regalo" onclick="abrirCarta()" id="regalo">🎁</div>
+
+<div class="carta" id="carta">
+
+<h1>💌 FELIZ CUMPLEAÑOS</h1>
+
+<p>
+<h2>Destinataria: Erika</h2>
+Historia: Te acuerdas como nos conocimos? cuando me pediste una rebanada y luego fuimos al parque andabas media tomada y yo todo cansado pero feliz de verte, ¿Salimos de nuevo? con 2 Rebandas 🫶
+</p>
+
+<div class="botones">
+
+<button class="si" id="siBtn" onclick="aceptar()">
+  Acepto 💗
+</button>
+
+<button class="no" id="noBtn">
+Rechazar
+</button>
+
+</div>
+
+</div>
+<br/>
+
+
+<div class="reproductor">
+<p>Reproducelo</p>
+<button onclick="play()">▶️</button>
+<button onclick="pause()">⏸️</button>
+<button onclick="stop()">⏹️</button>
+
+<input type="range" id="barra">
+
+</div>
+
+<div class="kitty" id="kitty">
+  <img src="kittytriste.gif">
+</div>
+
+<audio id="audio">
+<source src="Cumpleaños.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let noBtn=document.getElementById("noBtn")
+let siBtn=document.getElementById("siBtn")
+let kitty=document.getElementById("kitty")
+
+let noSize=1
+let siSize=1
+
+/* ABRIR CARTA */
+
+function abrirCarta(){
+
+document.getElementById("regalo").style.display="none"
+document.getElementById("carta").style.display="block"
+
+}
+
+/* BOTON QUE HUYE */
+
+noBtn.addEventListener("mouseover",()=>{
+
+let x=Math.random()*(window.innerWidth-120)
+let y=Math.random()*(window.innerHeight-50)
+
+noBtn.style.left=x+"px"
+noBtn.style.top=y+"px"
+
+/* SE HACE PEQUEÑO */
+
+noSize-=0.1
+if(noSize<0.3) noSize=0.3
+noBtn.style.transform="scale("+noSize+")"
+
+/* EL SI CRECE */
+
+siSize+=0.1
+siBtn.style.transform="scale("+siSize+")"
+
+/* APARECE KITTY */
+
+kitty.style.display="block"
+
+})
+
+/* MUSICA */
+
+let audio=document.getElementById("audio")
+let barra=document.getElementById("barra")
+
+function play(){
+audio.play()
+}
+
+function pause(){
+audio.pause()
+}
+
+function stop(){
+audio.pause()
+audio.currentTime=0
+}
+
+audio.addEventListener("timeupdate",()=>{
+
+barra.value=(audio.currentTime/audio.duration)*100
+
+})
+
+barra.addEventListener("input",()=>{
+
+audio.currentTime=(barra.value/100)*audio.duration
+
+})
+
+/* ACEPTAR */
+
+function aceptar(){
+
+window.location="Confirmado.html"
+
+}
+
+/* CORAZONES */
+
+function crearCorazon(){
+
+let corazon=document.createElement("div")
+corazon.className="corazon"
+corazon.innerHTML="❤️"
+
+corazon.style.left=Math.random()*100+"vw"
+corazon.style.fontSize=Math.random()*20+10+"px"
+
+document.body.appendChild(corazon)
+
+setTimeout(()=>{
+
+corazon.remove()
+
+},6000)
+
+}
+
+setInterval(crearCorazon,600)
+
+</script>
+
+</body>
+</html>

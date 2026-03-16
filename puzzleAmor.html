@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Puzzle interactivo</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+}
+
+#puzzle{
+width:300px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,100px);
+gap:2px;
+}
+
+.pieza{
+width:100px;
+height:100px;
+background-image:url("Amorpuzzle.jpeg");
+background-size:300px 300px;
+border:1px solid #ccc;
+cursor:pointer;
+}
+
+.seleccionada{
+outline:3px solid red;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Reconstruye la imagen</h2>
+
+<div id="puzzle"></div>
+
+<script>
+
+/* posiciones correctas de la imagen */
+
+let posiciones = [
+"0px 0px","-100px 0px","-200px 0px",
+"0px -100px","-100px -100px","-200px -100px",
+"0px -200px","-100px -200px","-200px -200px"
+];
+
+let piezas = [...posiciones];
+
+/* mezclar piezas */
+
+function mezclar(){
+
+for(let i=piezas.length-1;i>0;i--){
+
+let j=Math.floor(Math.random()*(i+1));
+
+[piezas[i],piezas[j]]=[piezas[j],piezas[i]];
+
+}
+
+}
+
+/* crear puzzle */
+
+function crearPuzzle(){
+
+let puzzle=document.getElementById("puzzle");
+
+puzzle.innerHTML="";
+
+piezas.forEach((pos,index)=>{
+
+let pieza=document.createElement("div");
+
+pieza.className="pieza";
+
+pieza.style.backgroundPosition=pos;
+
+/* evento clic */
+
+pieza.onclick=()=>seleccionar(index);
+
+puzzle.appendChild(pieza);
+
+});
+
+}
+
+/* guardar pieza seleccionada */
+
+let seleccionada=null;
+
+function seleccionar(index){
+
+if(seleccionada===null){
+
+seleccionada=index;
+
+}else{
+
+/* intercambiar piezas */
+
+[piezas[seleccionada],piezas[index]]=
+[piezas[index],piezas[seleccionada]];
+
+seleccionada=null;
+
+crearPuzzle();
+verificar();
+
+}
+
+}
+
+/* verificar si está resuelto */
+
+function verificar(){
+
+let correcto=true;
+
+for(let i=0;i<piezas.length;i++){
+
+if(piezas[i]!==posiciones[i]){
+
+correcto=false;
+break;
+
+}
+
+}
+
+if(correcto){
+
+localStorage.setItem("faseA","completada");
+
+window.location.href="Amor2.html";
+
+}
+
+}
+
+
+
+/* iniciar */
+
+mezclar();
+crearPuzzle();
+
+</script>
+
+</body>
+</html>

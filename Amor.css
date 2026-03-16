@@ -1,0 +1,91 @@
+/* Aquí empieza el diseño con CSS */
+
+body{
+font-family: Arial, sans-serif; 
+/* Tipo de letra */
+
+background:#f6f6f6;
+/* Color de fondo de la página */
+
+display:flex;
+/* Activa el sistema flex para acomodar elementos */
+
+justify-content:center;
+/* Centra horizontalmente */
+
+align-items:center;
+/* Centra verticalmente */
+
+height:100vh;
+/* Hace que el body ocupe toda la altura de la pantalla */
+}
+
+.card{
+background:#fff;
+/* Fondo blanco de la tarjeta */
+
+padding:30px;
+/* Espacio interno */
+
+border-radius:15px;
+/* Bordes redondeados */
+
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+/* Sombra para que parezca una tarjeta */
+
+text-align:center;
+/* Centra el texto */
+
+width:300px;
+/* Ancho de la tarjeta */
+}
+
+button{
+background:#ff4d6d;
+/* Color del botón */
+
+color:white;
+/* Color del texto del botón */
+
+border:none;
+/* Quita el borde */
+
+padding:10px 20px;
+/* Espacio interno */
+
+border-radius:8px;
+/* Bordes redondeados */
+
+cursor:pointer;
+/* Cambia el cursor al pasar encima */
+
+margin-top:10px;
+/* Espacio arriba del botón */
+}
+
+button:hover{
+background:#e63956;
+/* Cambia el color cuando pasas el mouse encima */
+}
+
+#mensaje{
+margin-top:15px;
+/* Espacio arriba del mensaje */
+
+font-weight:bold;
+/* Texto en negritas */
+}
+
+.loading::after{
+content:"";
+animation:puntos 1s infinite;
+}
+
+@keyframes puntos{
+
+0%{content:".";}
+33%{content:"..";}
+66%{content:"...";}
+100%{content:"";}
+
+}
